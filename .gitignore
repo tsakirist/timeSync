@@ -1,0 +1,4 @@
+#Exlcude some files/dirs from git repo
+
+*/node_modules
+.idea
