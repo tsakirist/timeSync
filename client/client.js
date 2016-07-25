@@ -45,13 +45,12 @@ class Client {
      */
     setDate(date) {
         return new Promise((resolve, reject) => {
-            // exec(`date --set @${date}`, (error, stdout) => {
             execFile('date', ['--set', `@${date}`], (error, stdout) => {
                 if (error!=null) {
                     reject(error);
                 }
                 else {
-                    this.setHwClock().then(()=> {
+                    this.setHwClock().then(() => {
                         resolve(stdout);
                     }, (error) => {
                         reject(error);
@@ -66,7 +65,7 @@ class Client {
      * @returns {Promise}
      */
     setHwClock() {
-        return new Promise((resolve, reject)=>{
+        return new Promise((resolve, reject) => {
             execFile('hwclock', ['-w'], (error) => {
                 if(error) {
                     reject(error);
