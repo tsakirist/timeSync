@@ -1,7 +1,0 @@
-{
-  "server"  : "http://localhost:3000/timesync",
-  "interval": "3600000",
-  "repeat"  : "5",
-  "delay"   : "1000",
-  "timeout" : "10000"
-}
