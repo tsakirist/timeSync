@@ -5,7 +5,7 @@ const timesync = require('timesync');
 class Client {
 
     constructor(configFile) {
-        this.config = require(configFile);
+        this.config = configFile;
     }
 
     start() {
@@ -13,16 +13,16 @@ class Client {
             this.tsClient = this.create();
         }
         catch (err) {
-            console.log(err);
+            console.error(err);
             return;
         }
         this.tsClient.on('sync', arg => {
             if(arg === 'end') {
-                let date = Math.floor(this.tsClient.now()/1000);
+                const date = Math.floor(this.tsClient.now()/1000);
                 this.setDate(date).then((out) => {
                     console.log("Resolved.\nChanged the date to:\n", out);
                 }, (err)=> {
-                    console.log('Rejected.\n', err);
+                    console.error('Rejected.\n', err);
                 });
             }
             console.log(`Synchronization ${arg === 'start' ? 'started' : 'ended' }`);
@@ -46,7 +46,7 @@ class Client {
     setDate(date) {
         return new Promise((resolve, reject) => {
             execFile('date', ['--set', `@${date}`], (error, stdout) => {
-                if (error!=null) {
+                if (error) {
                     reject(error);
                 }
                 else {
