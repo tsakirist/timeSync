@@ -78,10 +78,4 @@ class Client {
     }
 }
 
-/** config.json is the configuration file
- *  make your changes there
- */
-const configFile = "./config.json";
-
-const client = new Client(configFile);
-client.start();
+module.exports = Client;
