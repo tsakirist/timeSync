@@ -1,4 +1,4 @@
 #Exlcude some files/dirs from git repo
 
-*/node_modules
+node_modules
 .idea
