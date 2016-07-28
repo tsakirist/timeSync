@@ -17,16 +17,17 @@ class Client {
             console.error(err);
             return;
         }
-        let date, delta;
         this.tsClient.on('sync', arg => {
             if(arg === 'end') {
                 // const date = Math.floor(this.tsClient.now()/1000);
-                date = this.tsClient.now();
-                delta = date - Date.now();
+                let date = this.tsClient.now();
+                // delta = date - Date.now();
+                const delta = date - 971176210000; // Tue Oct 10 2000 14:10:10
                 date = Math.floor(date/1000);
                 this.setDate(date).then((out) => {
                     console.log("Resolved.\nChanged the date to:\n", out);
                     this.updateService(delta);
+                    // TODO check the promise returned to set the flag to synced or not for the cloud
                 }, (err)=> {
                     console.error('Rejected.\n', err);
                 });
