@@ -6,6 +6,7 @@ class Client {
 
     constructor(configFile) {
         this.config = configFile;
+        this.updateService = require('../service/update').updateRecords;
     }
 
     start() {
@@ -18,9 +19,12 @@ class Client {
         }
         this.tsClient.on('sync', arg => {
             if(arg === 'end') {
-                const date = Math.floor(this.tsClient.now()/1000);
+                let date = this.tsClient.now();
+                const delta = date - Date.now();
+                date = Math.floor(date/1000);
                 this.setDate(date).then((out) => {
                     console.log("Resolved.\nChanged the date to:\n", out);
+                    this.updateService(delta);
                 }, (err)=> {
                     console.error('Rejected.\n', err);
                 });
@@ -41,6 +45,7 @@ class Client {
      *  date --set @ <number>
      *  <number> is expressed in seconds
      *  (root privilege is required)
+     *  @param {number} date
      *  @returns {Promise}
      */
     setDate(date) {
